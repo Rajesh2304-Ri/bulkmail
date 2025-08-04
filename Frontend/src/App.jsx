@@ -8,12 +8,16 @@ function App() {
   const [status, setstatus] = useState(false)
   const [email, setemail] = useState([])
 
+  const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+
   const handleChange = (evt) => {
     setmsg(evt.target.value)
   }
 
   const handleSend = () => {
-    axios.post("http://localhost:5000/sendmail", { msg: msg, email: email }).then((data) => {
+    axios.post("/sendmail", { msg: msg, email: email }).then((data) => {
 
       if (data.data === true) {
         alert("Email sent Successfully!!")
