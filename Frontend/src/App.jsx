@@ -17,7 +17,7 @@ function App() {
   }
 
   const handleSend = () => {
-    axios.post("/sendmail", { msg: msg, email: email }).then((data) => {
+    api.post("/sendmail", { msg: msg, email: email }).then((data) => {
 
       if (data.data === true) {
         alert("Email sent Successfully!!")
