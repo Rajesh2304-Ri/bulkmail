@@ -7,9 +7,13 @@ const app = express()
 
 app.use(express.json())
 const PORT = process.env.PORT || 5000;
+
 app.use(cors({
-  origin: ["https://bulkmail-3v2w.onrender.com", "http://localhost:5173"]
+  origin: ["https://bulkmail-1-6fc0.onrender.com"],  // ✅ allow your frontend domain
+  methods: ["GET", "POST", "OPTIONS"],               // ✅ allow necessary methods
+  allowedHeaders: ["Content-Type", "Authorization"]  // ✅ allow headers if needed
 }));
+
 mongoose.connect("mongodb+srv://rajeshmusic3:Rajesh12345@cluster0.wnbkkbp.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(() => {
     console.log("Database Connected...");
 
