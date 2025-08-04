@@ -3,8 +3,13 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 const nodemailer = require("nodemailer")
 const app = express()
-app.use(cors())
+
+
 app.use(express.json())
+const PORT = process.env.PORT || 5000;
+app.use(cors({
+  origin: "https://bulkmail-3v2w.onrender.com",
+}));
 
 
 mongoose.connect("mongodb+srv://rajeshmusic3:Rajesh12345@cluster0.wnbkkbp.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(() => {
@@ -73,7 +78,7 @@ app.post("/sendmail", (req, res) => {
 
 
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log("Server Started....");
 
 })
