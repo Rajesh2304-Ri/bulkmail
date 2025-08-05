@@ -14,7 +14,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]  // ✅ allow headers if needed
 }));
 
-mongoose.connect("mongodb+srv://rajeshmusic3:Rajesh12345@cluster0.wnbkkbp.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+mongoose.connect("mongodb+srv://rajeshmusic3:Rajesh12345@cluster0.wnbkkbp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
     console.log("Database Connected...");
 
 }).catch(() => {
@@ -60,6 +60,7 @@ app.post("/sendmail", (req, res) => {
 
         }
         catch {
+            console.log("Catch Error" )
             reject("failed")
         }
     }).then(() => {
@@ -70,7 +71,7 @@ app.post("/sendmail", (req, res) => {
     })
 
 
-}).catch((error)=>{
+}).catch((error)=>{+
     console.log(error);
     
 })
