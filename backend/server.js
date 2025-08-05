@@ -8,13 +8,9 @@ const app = express()
 app.use(express.json())
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-  origin: ["https://bulkmail-1-6fc0.onrender.com"],  // ✅ allow your frontend domain
-  methods: ["GET", "POST", "OPTIONS"],               // ✅ allow necessary methods
-  allowedHeaders: ["Content-Type", "Authorization"]  // ✅ allow headers if needed
-}));
+app.use(cors());
 
-mongoose.connect("mongodb+srv://rajeshmusic3:Rajesh12345@cluster0.wnbkkbp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+mongoose.connect("mongodb+srv://rajeshmusic3:Rajesh%40%4012345@cluster0.wnbkkbp.mongodb.net/passkey?retryWrites=true&w=majority&appName=Cluster0").then(() => {
     console.log("Database Connected...");
 
 }).catch(() => {
@@ -32,49 +28,57 @@ app.post("/sendmail", (req, res) => {
     const email = req.body.email
 
     credential.find().then((data) => {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user:data[0].toJSON().user,
-            pass: data[0].toJSON().pass,
-        }
-    })
+        console.log("data:"+data[0]);
+       
+        
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: data[0].toJSON().user,
 
-    
-    new Promise(async (resolve, reject) => {
+                pass: data[0].toJSON().pass,
+            },
 
-        try {
-            for (var i = 0; i < email.length; i++) {
+        })
 
-                await transporter.sendMail({
-                    from: "Rajeshbscit092@gmail.com",
-                    to: email[i],
-                    subject: "BulkMail",
-                    text: msg,
+       
+
+
+        new Promise(async (resolve, reject) => {
+
+            try {
+                for (var i = 0; i < email.length; i++) {
+
+                    await transporter.sendMail({
+                        from: "Rajeshbscit092@gmail.com",
+                        to: email[i],
+                        subject: "BulkMail",
+                        text: msg,
+                    }
+                    )
+                    console.log("Email sent to :" + email[i]);
+
                 }
-                )
-                console.log("Email sent to :"+email[i]);
-                
+                resolve("success")
+
             }
-            resolve("success")
+            catch {
+                console.log("Catch Error")
+                reject("failed")
+            }
+        }).then(() => {
+            res.send(true)
+        }).catch(() => {
+            console.log("Error while sending email");
+            res.send(false)
+        })
 
-        }
-        catch {
-            console.log("Catch Error" )
-            reject("failed")
-        }
-    }).then(() => {
-        res.send(true)
-    }).catch(() => {
-        console.log("Error while sending email");
-        res.send(false)
+
+    }).catch((error) => {
+        +
+        console.log("Credential error:"+error);
+
     })
-
-
-}).catch((error)=>{+
-    console.log(error);
-    
-})
 
 
 
