@@ -17,7 +17,7 @@ function App() {
   }
 
   const handleSend = () => {
-    api.post("/sendmail", { msg: msg, email: email }).then((data) => {
+    axios.post("http://localhost:5000/sendmail", { msg: msg, email: email }).then((data) => {
 
       if (data.data === true) {
         alert("Email sent Successfully!!")
@@ -28,8 +28,8 @@ function App() {
 
       }
 
-    }).catch(() => {
-      console.log("error");
+    }).catch((error) => {
+      console.log(error);
 
     })
     setstatus(true)
@@ -55,7 +55,7 @@ function App() {
         .map((item, index) => {
           return item
         })
-      console.log(workbook);
+      console.log("EmailList:"+emaillist);
 
       setemail(emaillist)
 
